@@ -3,6 +3,8 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
+import matplotlib.pyplot as plt
+
 
 # training data download
 training_data = datasets.FashionMNIST(
@@ -149,9 +151,17 @@ classes = [
 # test the loaded model
 model.eval()
 x, y = test_data[0][0], test_data[0][1]
+
 with torch.no_grad():
     x = x.to(device)
     pred = model(x)
     predicted, actual = classes[pred[0].argmax(0)], classes[y]
     print(f'Predicted: "{predicted}", Actual: "{actual}"')
+    figure = plt.figure(figsize=(8, 8))
+    figure.add_subplot(1, 1, 1)
+    x = x.cpu().numpy()[0, :, :]
+    plt.title(classes[y])
+    plt.axis("off")
+    plt.imshow(x, cmap="gray")
+    plt.show()
 
