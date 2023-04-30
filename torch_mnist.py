@@ -22,7 +22,9 @@ test_data = datasets.FashionMNIST(
     transform=ToTensor(),
 )
 
+learning_rate = 1e-3
 batch_size = 64
+epochs = 5
 
 # create data loader
 train_dataloader = DataLoader(training_data, batch_size=batch_size)
@@ -72,7 +74,7 @@ model = NeuralNetwork().to(device)
 print(model)
 
 loss_fn = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
 
 
 # train the model
@@ -120,7 +122,6 @@ def test(dataloader, model, loss_fn):
 
 
 # actual training
-epochs = 5
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     train(train_dataloader, model, loss_fn, optimizer)
